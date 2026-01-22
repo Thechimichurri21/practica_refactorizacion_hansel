@@ -5,12 +5,14 @@ import java.util.List;
 public class SistemaReservasDeportivas {
 
     private List<Reserva> reservas;
-    private boolean[] iluminacion;
+    //Nueva conexion con el gestor de luces
+    private GestorIluminacion gestorLuces;
     private static final int MAX_PISTAS = 10; // Asumimos un máximo de 10 pistas
 
     public SistemaReservasDeportivas() {
-        reservas = new ArrayList<>();
-        iluminacion = new boolean[MAX_PISTAS];
+        this.reservas = new ArrayList<>();
+        //El gestor se crea al iniciar el sistema
+        this.gestorLuces = new GestorIluminacion(MAX_PISTAS);
     }
 
     public boolean reservarPista(Reserva nuevaReserva) {
@@ -42,19 +44,10 @@ public class SistemaReservasDeportivas {
     }
 
     public boolean encenderLuces(int idPista) {
-        if (idPista < 0 || idPista >= MAX_PISTAS) {
-            return false; // ID de pista inválido
-        }
-        iluminacion[idPista] = true;
-        return true;
+        return gestorLuces.encenderLuces(idPista);
     }
-
     public boolean apagarLuces(int idPista) {
-        if (idPista < 0 || idPista >= MAX_PISTAS) {
-            return false; // ID de pista inválido
-        }
-        iluminacion[idPista] = false;
-        return true;
+        return gestorLuces.encenderLuces(idPista);
     }
 
     public boolean verificarDisponibilidad(int idPista, LocalDate fecha, String hora) {
