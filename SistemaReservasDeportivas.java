@@ -41,7 +41,7 @@ public class SistemaReservasDeportivas {
         return false; // No se encontró la reserva
     }
 
-    public boolean activarIluminacion(int idPista) {
+    public boolean encenderLuces(int idPista) {
         if (idPista < 0 || idPista >= MAX_PISTAS) {
             return false; // ID de pista inválido
         }
@@ -49,7 +49,7 @@ public class SistemaReservasDeportivas {
         return true;
     }
 
-    public boolean desactivarIluminacion(int idPista) {
+    public boolean apagarluces(int idPista) {
         if (idPista < 0 || idPista >= MAX_PISTAS) {
             return false; // ID de pista inválido
         }
@@ -62,10 +62,15 @@ public class SistemaReservasDeportivas {
             return false; // ID de pista inválido
         }
         for (Reserva r : reservas) {
-            if (r.getIdPista() == idPista && r.getFecha().equals(fecha)) {
-                return false; // La pista no está disponible en esa fecha
-            }
+            if (esFechaDisponible(idPista, fecha, r)) return false; // La pista no está disponible en esa fecha
         }
         return true; // La pista está disponible
+    }
+
+    private static boolean esFechaDisponible(int idPista, LocalDate fecha, Reserva r) {
+        if (r.getIdPista() == idPista && r.getFecha().equals(fecha)) {
+            return true;
+        }
+        return false;
     }
 }
